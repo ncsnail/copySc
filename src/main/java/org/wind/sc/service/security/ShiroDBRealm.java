@@ -43,6 +43,7 @@ public class ShiroDBRealm extends AuthorizingRealm{
 		User user = new User();
 		user.setLoginName("user");
 		user.setPassword("user");
+		user.setName("test");
 		if(user != null){
 			if(username.equals(user.getLoginName())){
 				if(new String(password).equals(user.getPassword())){
