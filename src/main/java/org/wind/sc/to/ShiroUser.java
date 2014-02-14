@@ -5,7 +5,7 @@ public class ShiroUser {
 	public Long id;
 	public String loginName;
 	public String name;
-	private String roles;
+
 	
 	public Long getId() {
 		return id;
@@ -24,12 +24,6 @@ public class ShiroUser {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getRoles() {
-		return roles;
-	}
-	public void setRoles(String roles) {
-		this.roles = roles;
 	}
 	
 }
