@@ -10,31 +10,7 @@
 	<script src="${ctx}/static/jquery-validation/1.11.1/messages_bs_zh.js" type="text/javascript"></script>
 	<link href="${ctx}/static/jquery-validation/1.11.1/validate.css" type="text/css" rel="stylesheet" />
 	<script>
-		$(document).ready(function() {
-			$("#account-tab").addClass("active");
-			
-			//为inputForm注册validate函数
-			$("#inputForm").validate({
-				rules: {
-					loginName: {
-						remote: "${ctx}/account/user/checkLoginName?oldLoginName=" + encodeURIComponent('${user.loginName}')
-					},
-					roleList:"required"
-				},
-				messages: {
-					loginName: {
-						remote: "用户登录名已存在"
-					}
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					if ( element.is(":checkbox") )
-						error.appendTo(element.parent().next());
-					else
-						error.insertAfter(element);
-				}
-			});
-		});
+		
 	</script>
 </head>
 
