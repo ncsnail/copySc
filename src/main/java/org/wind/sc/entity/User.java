@@ -9,6 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
@@ -17,7 +18,9 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springside.modules.utils.Collections3;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 @Entity
@@ -117,6 +120,12 @@ public class User extends IdEntity{
 
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public String getRoleNames() {
+		return Collections3.extractToString(roleList, "name", ", ");
 	}
 
 	public String toString(){

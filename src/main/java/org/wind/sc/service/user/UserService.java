@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.wind.sc.entity.User;
 import org.wind.sc.repository.jpa.UserDao;
+import org.wind.sc.to.SearchAttributes;
 
 
 @Service("userService")
@@ -32,10 +33,10 @@ public class UserService {
 		return userDao.findByLoginName(username);
 	}
 	
-	public Page<User> getUserList(String[] searchParams,int pageNum,int pageSize){
+	public Page<User> getUserList(SearchAttributes search,int pageNum,int pageSize){
 		
 		PageRequest pr = buildPageRequest(pageNum,pageSize,null);
-		Specification<User> spec =  buildSpecification(searchParams); 
+		Specification<User> spec =  buildSpecification(search); 
 		return userDao.findAll(spec, pr);
 	}
 	//build page info
@@ -49,21 +50,29 @@ public class UserService {
 		return new PageRequest(pageNum - 1,pageSize,sort);
 	}
 	//build search criteria
-	private Specification<User> buildSpecification(final String[] searchParams){
+	private Specification<User> buildSpecification(final SearchAttributes search){
 		return new Specification<User>(){
 			public Predicate toPredicate(Root<User> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
-				Predicate p = null;
-				if(searchParams != null){
-					Predicate pt = null;
-					for(int i = 0; i< searchParams.length;i++){
-						if(StringUtils.isNotBlank(searchParams[i])){
-							pt = cb.like(root.get("loginName").as(String.class), "%"+searchParams[i]+"%");
-							p = cb.and(p,pt);
-						}
+				Predicate pAll = null;
+				if(search != null){
+					Predicate p1 = null;
+					Predicate p2 = null;
+					boolean b1 = StringUtils.isNotBlank(search.getLoginName()) ;
+					boolean b2 = StringUtils.isNotBlank(search.getEmail());
+					if(b1 && b2 ){
+							p1 = cb.like(root.get("loginName").as(String.class), "%"+search.getLoginName()+"%");
+							p2 = cb.like(root.get("email").as(String.class), "%"+search.getEmail()+"%");
+							pAll = cb.and(p1,p2);
+					}else if(b1 && !b2){
+						p1 = cb.like(root.get("loginName").as(String.class), "%"+search.getLoginName()+"%");
+						pAll = cb.and(p1,pAll);
+					}else if(!b1 && b2){
+						p2 = cb.like(root.get("email").as(String.class), "%"+search.getEmail()+"%");
+						pAll = cb.and(p2,pAll);
 					}
 				}
-				return p;
+				return pAll;
 			}
 		};
 	}

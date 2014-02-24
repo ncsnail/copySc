@@ -40,7 +40,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${users}" var="user">
+		<c:forEach items="${users.content}" var="user">
 			<tr>
 				<td>${user.loginName}&nbsp;</td>
 				<td>${user.name}&nbsp;</td>
@@ -48,9 +48,9 @@
 				<td>${user.roleNames}&nbsp;</td>
 				<td>${allStatus[user.status]}&nbsp;</td>
 				<td>
-					<shiro:hasPermission name="user:edit">
-						<a href="${ctx}/account/user/update/${user.id}" id="editLink-${user.loginName}">修改</a>
-					</shiro:hasPermission>
+					
+				<a href="${ctx}/account/user/update/${user.id}" id="editLink-${user.loginName}">修改</a>
+					
 				</td>
 			</tr>
 		</c:forEach>

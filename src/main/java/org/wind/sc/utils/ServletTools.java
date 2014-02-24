@@ -32,14 +32,8 @@ public class ServletTools {
 				}else{
 					params.put(noPrefixParam, values[0]);
 				}
-				
 			}
-			
-			
 		}
-		
-		
-		return null;
+		return params;
 	}
-	
 }
