@@ -32,13 +32,14 @@ public class User extends IdEntity{
 	private String loginName;
 	@NotBlank
 	private String name;
-	@NotBlank
 	private String password;
 	private String salt;
 	@Email
 	private String email;
 	private String status;
-	
+	@Transient
+	private String plainPassword;
+
 	@ManyToMany
 	@JoinTable(name = "t_user_role",joinColumns = {@JoinColumn(name = "user_id")},inverseJoinColumns = {@JoinColumn(name = "role_id")})
 	@Fetch(FetchMode.SUBSELECT)
@@ -127,6 +128,15 @@ public class User extends IdEntity{
 	public String getRoleNames() {
 		return Collections3.extractToString(roleList, "name", ", ");
 	}
+	
+	public String getPlainPassword() {
+		return plainPassword;
+	}
+
+	public void setPlainPassword(String plainPassword) {
+		this.plainPassword = plainPassword;
+	}
+	
 
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);

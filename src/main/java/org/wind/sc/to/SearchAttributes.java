@@ -2,9 +2,9 @@ package org.wind.sc.to;
 
 public class SearchAttributes {
 	
-	private String loginName;
+	private String loginName = "";
 	
-	private String email;
+	private String email = "";
 	
 	public String getLoginName() {
 		return loginName;

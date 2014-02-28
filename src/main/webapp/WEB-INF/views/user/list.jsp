@@ -1,12 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>综合演示用例</title>
+	<title>User manager</title>
 	<script>
 		$(document).ready(function() {
+			//选中左侧菜单
 			$("#account-tab").addClass("active");
 		});
 	</script>
@@ -21,8 +23,8 @@
 	<div class="row">
 		<div class="offset4">
 			<form class="form-search" action="#">
-			 	<label>登录名：</label> <input type="text" name="search_LIKE_loginName"   class="input-small"  value="${param.search_LIKE_loginName}"> 
-			    <label>邮件名：</label> <input type="text" name="search_EQ_email" class="input-small" value="${param.search_EQ_email}">
+			 	<label>登录名：</label> <input type="text" name="loginName"   class="input-small"  value="${search.loginName}"> 
+			    <label>邮件名：</label> <input type="text" name="email" class="input-small" value="${search.email}">
 			    <button type="submit" class="btn" id="search_btn">Search</button>
 		    </form>
 	    </div>
@@ -48,13 +50,14 @@
 				<td>${user.roleNames}&nbsp;</td>
 				<td>${allStatus[user.status]}&nbsp;</td>
 				<td>
-					
-				<a href="${ctx}/account/user/update/${user.id}" id="editLink-${user.loginName}">修改</a>
-					
+				<a href="${ctx}/user/update/${user.id}" id="editLink-${user.loginName}">修改</a>
 				</td>
 			</tr>
 		</c:forEach>
-		</tbody>		
+		</tbody>	
+		<c:if test="${not empty users}">
+		<tags:page page="${users}" paginationSize="5"/>
+		</c:if>	
 	</table>
 </body>
 </html>

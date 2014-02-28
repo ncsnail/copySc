@@ -65,11 +65,9 @@ public class UserService {
 							p2 = cb.like(root.get("email").as(String.class), "%"+search.getEmail()+"%");
 							pAll = cb.and(p1,p2);
 					}else if(b1 && !b2){
-						p1 = cb.like(root.get("loginName").as(String.class), "%"+search.getLoginName()+"%");
-						pAll = cb.and(p1,pAll);
+						pAll = cb.like(root.get("loginName").as(String.class), "%"+search.getLoginName()+"%");
 					}else if(!b1 && b2){
-						p2 = cb.like(root.get("email").as(String.class), "%"+search.getEmail()+"%");
-						pAll = cb.and(p2,pAll);
+						pAll = cb.like(root.get("email").as(String.class), "%"+search.getEmail()+"%");
 					}
 				}
 				return pAll;
@@ -77,7 +75,12 @@ public class UserService {
 		};
 	}
 	
+	public User getUser(Long userId){
+		return this.userDao.findOne(userId);
+	}
 	
-	
+	public void saveUser(User user){
+		this.userDao.save(user);
+	}
 	
 }
