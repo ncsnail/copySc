@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wind.sc.repository.mybatis.UserMybatisDao">
+	<select id="get" parameterMap="long" resultType="User">
+		select id,name,password,salt,email,status,
+		login_name as loginName,team_id as "team.id"
+		from t_user 
+		where id=#{id}
+	</select>
+	
+	<select id="findByLoginName" parameterType="string" resultType="User">
+		select id,name,password,salt,email,status,
+		login_name as loginName,team_id as "team.id"
+		from t_user 
+		where login_name=#{loginName}
+	</select>
+</mapper>

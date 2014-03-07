@@ -11,47 +11,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.wind.sc.entity.User;
-import org.wind.sc.repository.jpa.UserDao;
-import org.wind.sc.to.SearchAttributes;
+import org.wind.sc.repository.jpa.UserJpaDao;
+import org.wind.sc.to.SearchCriteria;
 
 
-@Service("userService")
-public class UserService {
+@Service("userServiceJpaImpl")
+public class UserServiceJpaImpl implements IUserService{
 	
-	private static Logger log = LoggerFactory.getLogger(UserService.class);
+	private static Logger log = LoggerFactory.getLogger(UserServiceJpaImpl.class);
 	
 	@Autowired
-	UserDao userDao;
+	UserJpaDao userDao;
 	
 	public User findByLoginName(String username){
 		return userDao.findByLoginName(username);
 	}
 	
-	public Page<User> getUserList(SearchAttributes search,int pageNum,int pageSize){
+	public Page<User> getUserList(final SearchCriteria search,Pageable pa) throws Exception{
 		
-		PageRequest pr = buildPageRequest(pageNum,pageSize,null);
-		Specification<User> spec =  buildSpecification(search); 
-		return userDao.findAll(spec, pr);
-	}
-	//build page info
-	private PageRequest buildPageRequest(int pageNum,int pageSize,String sortType){
-		Sort sort = null;
-		if(sortType!=null){
-			//to do
-		}else{
-			sort = new Sort(Direction.ASC,"id");
-		}
-		return new PageRequest(pageNum - 1,pageSize,sort);
-	}
-	//build search criteria
-	private Specification<User> buildSpecification(final SearchAttributes search){
-		return new Specification<User>(){
+		Specification<User> spec =  new Specification<User>(){
 			public Predicate toPredicate(Root<User> root,
 					CriteriaQuery<?> query, CriteriaBuilder cb) {
 				Predicate pAll = null;
@@ -73,6 +55,8 @@ public class UserService {
 				return pAll;
 			}
 		};
+		
+		return userDao.findAll(spec, pa);
 	}
 	
 	public User getUser(Long userId){

@@ -6,7 +6,12 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wind.sc.entity.User;
-import org.wind.sc.service.user.UserService;
-import org.wind.sc.to.SearchAttributes;
+import org.wind.sc.service.user.IUserService;
+import org.wind.sc.to.SearchCriteria;
 
 import com.google.common.collect.Maps;
 
@@ -35,14 +40,20 @@ public class UserController {
 	}
 	
 	@Autowired
-	UserService userService;
+	@Qualifier("userServiceJpaImpl")
+	IUserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String getList(SearchAttributes search,
+	public String getList(SearchCriteria search,
 						  @RequestParam(value="pageNum",defaultValue="1") int pageNum,
 						  @RequestParam(value="page.size",defaultValue=PAGE_SIZE)int pageSize, Model model){
 		try{
-			Page<User> users = userService.getUserList(search, pageNum, pageSize);
+			
+			
+			Pageable pa = buildPageRequest(pageNum, pageSize,null);
+			Page<User> users = userService.getUserList(search, pa);
+			
+			
 			StringBuffer sb = new StringBuffer();
 			String loginNameValue = search.getLoginName();
 			String emailValue = search.getEmail();
@@ -109,6 +120,18 @@ public class UserController {
 			return "true";
 		}
 		return "false";
+	}
+	
+	
+	//build page info
+	private PageRequest buildPageRequest(int pageNum,int pageSize,String sortType){
+		Sort sort = null;
+		if(sortType!=null){
+			//to do
+		}else{
+			sort = new Sort(Direction.ASC,"id");
+		}
+		return new PageRequest(pageNum - 1,pageSize,sort);
 	}
 	
 	

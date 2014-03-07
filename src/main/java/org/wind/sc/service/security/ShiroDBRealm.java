@@ -13,14 +13,14 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.wind.sc.entity.Role;
 import org.wind.sc.entity.User;
-import org.wind.sc.repository.jpa.UserDao;
+import org.wind.sc.repository.mybatis.UserMybatisDao;
 import org.wind.sc.to.ShiroUser;
 
 public class ShiroDBRealm extends AuthorizingRealm{
 
 	
 	@Autowired
-	UserDao userDao;
+	UserMybatisDao userDao;
 	
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
