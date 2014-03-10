@@ -9,7 +9,7 @@ import org.wind.sc.to.SearchPageCriteria;
 
 
 @MyBatisRepository
-public interface UserMybatisDao {
+public interface UserMyBatisDao {
 	
 	User get(Long id);
 	

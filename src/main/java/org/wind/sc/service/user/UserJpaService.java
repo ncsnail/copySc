@@ -19,10 +19,10 @@ import org.wind.sc.repository.jpa.UserJpaDao;
 import org.wind.sc.to.SearchCriteria;
 
 
-@Service("userServiceJpaImpl")
-public class UserServiceJpaImpl implements IUserService{
+@Service("userService")
+public class UserJpaService implements IUserService{
 	
-	private static Logger log = LoggerFactory.getLogger(UserServiceJpaImpl.class);
+	private static Logger log = LoggerFactory.getLogger(UserJpaService.class);
 	
 	@Autowired
 	UserJpaDao userDao;

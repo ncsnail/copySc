@@ -13,20 +13,20 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.wind.sc.entity.Role;
 import org.wind.sc.entity.User;
-import org.wind.sc.repository.mybatis.UserMybatisDao;
+import org.wind.sc.service.user.IUserService;
 import org.wind.sc.to.ShiroUser;
 
 public class ShiroDBRealm extends AuthorizingRealm{
 
 	
 	@Autowired
-	UserMybatisDao userDao;
+	IUserService userService;
 	
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		
 		ShiroUser su = (ShiroUser)principals.getPrimaryPrincipal();
-		User user = userDao.findByLoginName(su.getLoginName());
+		User user = userService.findByLoginName(su.getLoginName());
 		SimpleAuthorizationInfo info =  new SimpleAuthorizationInfo();
 		for(Role role: user.getRoleList()){
 			info.addRole(role.getName());
@@ -41,7 +41,7 @@ public class ShiroDBRealm extends AuthorizingRealm{
 		UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
 		String username = token.getUsername();
 		char[] password = token.getPassword();
-		User user = userDao.findByLoginName(username);
+		User user = userService.findByLoginName(username);
 		if(user != null){
 			if(username.equals(user.getLoginName())){
 				if(new String(password).equals(user.getPassword())){

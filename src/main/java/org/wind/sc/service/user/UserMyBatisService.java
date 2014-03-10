@@ -9,15 +9,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.wind.sc.entity.User;
-import org.wind.sc.repository.mybatis.UserMybatisDao;
+import org.wind.sc.repository.mybatis.UserMyBatisDao;
 import org.wind.sc.to.SearchCriteria;
 import org.wind.sc.to.SearchPageCriteria;
 
-@Service("userServiceMyBatisImpl")
-public class UserServiceMyBatisImpl implements IUserService{
+@Service("userService")
+public class UserMyBatisService implements IUserService{
 
 	@Autowired
-	UserMybatisDao userDao;
+	UserMyBatisDao userDao;
 	
 	public User findByLoginName(String loginName) {
 		return userDao.findByLoginName(loginName);

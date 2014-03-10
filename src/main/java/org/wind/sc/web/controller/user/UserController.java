@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +39,6 @@ public class UserController {
 	}
 	
 	@Autowired
-	@Qualifier("userServiceJpaImpl")
 	IUserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -49,10 +47,8 @@ public class UserController {
 						  @RequestParam(value="page.size",defaultValue=PAGE_SIZE)int pageSize, Model model){
 		try{
 			
-			
 			Pageable pa = buildPageRequest(pageNum, pageSize,null);
 			Page<User> users = userService.getUserList(search, pa);
-			
 			
 			StringBuffer sb = new StringBuffer();
 			String loginNameValue = search.getLoginName();

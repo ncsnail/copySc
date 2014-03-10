@@ -7,7 +7,8 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/resourses/applicationContext-sc.xml</config>
+		<config>src/main/resourses/jpa-context.xml</config>
+		<config>src/main/resourses/root-context.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

@@ -11,7 +11,7 @@
 	
 	<select id="findByLoginName" parameterType="string" resultType="User">
 		select id,name,password,salt,email,status,
-		login_name as loginName,team_id as "team.id"
+		login_name as loginName
 		from t_user 
 		where login_name=#{loginName}
 	</select>
