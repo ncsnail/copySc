@@ -16,8 +16,12 @@ public interface UserMyBatisDao {
 	User findByLoginName(String loginName);
 
 	List<User> getList(SearchPageCriteria spc);
+	
+	int getAmount(SearchPageCriteria spc);
 
-	void save(User user);
+	void insert(User user);
+	
+	void update(User user);
 
 	void delete(Long id);
 }

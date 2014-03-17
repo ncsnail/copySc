@@ -8,11 +8,11 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>403 - 用户权限不足</title>
+	<title>403 -  Permission denied</title>
 </head>
 
 <body>
-	<h2>403 - 用户权限不足.</h2>
-	<p><a href="<c:url value="/"/>">返回首页</a></p>
+	<h2>403 -  Permission denied.</h2>
+	<p><a href="<c:url value="/"/>">Back to homepage</a></p>
 </body>
 </html>

@@ -10,10 +10,10 @@
 	</script>
 </head>
 <body>
-	<h1>What is it?</h1>
-	<p style="padding: 15px;">各式主流的、实用的、好玩的开源项目大派对。</p>
+	<h1>-Slogan-</h1>
+	<p style="padding: 15px;">Keep learning new technologies !</p>
 	
-	<h1>What is new?</h1>
+	<h1>-Details-</h1>
 	<h2>4.2版</h2>
 	<ul>
 		<li>性能监控新增Metrics/Graphite演示。</li>

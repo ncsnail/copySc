@@ -24,7 +24,7 @@
     color: #4A8C04;
     font-size: 16px;
     font-weight: bold;
-    text-align: right;
+    text-align: left;
     text-transform: uppercase;
 }
 .submenu a {
@@ -56,7 +56,7 @@
     color: #728C40;
     font-size: 16px;
     font-weight: normal;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 
 #main h1,h2 {

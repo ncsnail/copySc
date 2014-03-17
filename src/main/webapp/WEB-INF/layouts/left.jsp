@@ -3,11 +3,11 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="leftbar" class="span2">
-	<h1>综合演示</h1>
+	<h1>Part I</h1>
 	<div class="submenu">
-		<a id="account-tab"href="${ctx}/user">帐号管理</a>
+		<a id="account-tab"href="${ctx}/user">User Managerment</a>
 	</div>
-	<h1>独立演示</h1>
+	<h1>Part II</h1>
 	<div class="submenu">
 		<a id="web-tab" href="${ctx}/story/web">Web演示</a>
 		<a id="webservice-tab"href="${ctx}/story/webservice">WebService演示</a>
@@ -16,7 +16,7 @@
 		<a id="log-tab" href="${ctx}/story/log">日志高级演示</a>
 		<a id="monitor-tab" href="${ctx}/story/monitor">性能监控演示</a>
 	</div>
-	<h1>演示说明</h1>
+	<h1>Part III</h1>
 	<div class="submenu">
 		<a id="persistence-tab" href="${ctx}/story/persistence">持久化高级演示</a>
 		<a id="jms-tab" href="${ctx}/story/jms">JMS演示</a>

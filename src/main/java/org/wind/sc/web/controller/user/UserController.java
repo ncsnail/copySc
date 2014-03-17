@@ -34,8 +34,8 @@ public class UserController {
 	private static Map<String,String> allStatus = Maps.newHashMap();
 	
 	static{
-		allStatus.put("enabled", "有效的");
-		allStatus.put("disabled", "无效的");
+		allStatus.put("enabled", "enabled");
+		allStatus.put("disabled", "disabled");
 	}
 	
 	@Autowired
@@ -99,7 +99,7 @@ public class UserController {
 				oldUser.setPassword(user.getPlainPassword());
 			}
 			userService.saveUser(oldUser);
-			redirectAttributes.addAttribute("message", "用户更新成功");
+			redirectAttributes.addFlashAttribute("message", "update successfully");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

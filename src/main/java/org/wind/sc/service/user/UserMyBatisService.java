@@ -22,7 +22,6 @@ public class UserMyBatisService implements IUserService{
 	public User findByLoginName(String loginName) {
 		return userDao.findByLoginName(loginName);
 	}
-
 	public Page<User> getUserList(SearchCriteria search, Pageable pa) throws Exception {
 		
 		SearchPageCriteria spc = new SearchPageCriteria();
@@ -30,17 +29,21 @@ public class UserMyBatisService implements IUserService{
 		spc.setPageSize(pa.getPageSize());
 		spc.setOffset(pa.getPageNumber() * pa.getPageSize());
 		List<User> userList = userDao.getList(spc);
-		int totalCount = 10;
+		int totalCount = userDao.getAmount(spc);
 		Page<User> userPage = new PageImpl<User>(userList,pa,totalCount);
 		
 		return userPage;
 	}
-
 	public User getUser(Long userId) {
 		return userDao.get(userId);
 	}
 
 	public void saveUser(User user) {
+		if(user.getId() != null){
+			userDao.update(user);
+		}else{
+			userDao.insert(user);
+		}
 		
 	}
 

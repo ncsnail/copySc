@@ -4,7 +4,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>综合演示用例</title>
+	<title>Show Board</title>
 	<script src="${ctx}/static/jquery-validation/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
 	<script src="${ctx}/static/jquery-validation/1.11.1/messages_bs_zh.js" type="text/javascript"></script>
 	<link href="${ctx}/static/jquery-validation/1.11.1/validate.css" type="text/css" rel="stylesheet" />
@@ -21,7 +21,7 @@
 				},
 				messages:{
 					loginName: {
-						remote: "用户登录名已存在"
+						remote: "The user name exists!"
 					}
 				}
 			});		
@@ -30,43 +30,43 @@
 </head>
 
 <body>
-	<h1>综合演示用例</h1>
+	<h1>Show Board</h1>
 	<form id="inputForm" action="${ctx}/user/update" method="post" class="form-horizontal">
 		<input type="hidden" name="id" value="${user.id}"/>
 		<fieldset>
-			<legend><small>管理用户</small></legend>
-			<div id="messageBox" class="alert alert-error input-large controls" style="display:none">输入有误，请先更正。</div>
+			<legend><small>User Managerment</small></legend>
+			<div id="messageBox" class="alert alert-error input-large controls" style="display:none">Error,please try a again</div>
 			<div class="control-group">
-				<label for="loginName" class="control-label">登录名:</label>
+				<label for="loginName" class="control-label">Username:</label>
 				<div class="controls">
 					<input type="text" id="loginName" name="loginName" value="${user.loginName}" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="name" class="control-label">用户名:</label>
+				<label for="name" class="control-label">Name:</label>
 				<div class="controls">
 					<input type="text" id="name" name="name"  value="${user.name}" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="plainPassword" class="control-label">密码:</label>
+				<label for="plainPassword" class="control-label">Password:</label>
 				<div class="controls">
 					<input type="password" id="plainPassword" name="plainPassword" class="input-large" placeholder="...Leave it blank if no change"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="groupList" class="control-label">角色:</label>
+				<label for="groupList" class="control-label">Role:</label>
 				<div class="controls">
 					
 				</div>
 			</div>	
 			<div class="control-group">
-				<label for="status" class="control-label">状态:</label>
+				<label for="status" class="control-label">Status:</label>
 				<div class="controls">
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="email" class="control-label">email:</label>
+				<label for="email" class="control-label">Email:</label>
 				<div class="controls">
 				    <input type="text" id="email" name="email"  value="${user.email}" class="input-large required"/>
 				</div>

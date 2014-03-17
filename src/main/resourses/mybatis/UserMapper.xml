@@ -1,18 +1,100 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.wind.sc.repository.mybatis.UserMybatisDao">
-	<select id="get" parameterMap="long" resultType="User">
-		select id,name,password,salt,email,status,
-		login_name as loginName,team_id as "team.id"
-		from t_user 
-		where id=#{id}
-	</select>
-	
+<mapper namespace="org.wind.sc.repository.mybatis.UserMyBatisDao">	
 	<select id="findByLoginName" parameterType="string" resultType="User">
-		select id,name,password,salt,email,status,
-		login_name as loginName
-		from t_user 
+		select id, name,password,salt,email,status,
+			login_name as loginName,
+			team_id as "team.id"
+		from t_user
 		where login_name=#{loginName}
 	</select>
+	<!--  another way  -->
+	<!--
+	<select id="findByLoginName" parameterType="string" resultMap="userResult">
+		select u.id as u_id,
+			   u.name as u_name,
+			   u.password as u_password,
+			   u.salt as u_salt,
+			   u.email as u_email,
+			   u.status as u_status,
+			   u.login_name as u_loginName,
+			   u.team_id as u_team_id,
+			   t.id as t_id,
+			   t.name as t_name
+		from t_user u,t_team t
+		where u.login_name=#{loginName} and u.team_id=t.id
+	</select>
+	<resultMap type="User" id="userResult">
+		<id property="id" column="u_id"/>
+		<result property="name" column="u_name"/>
+		<result property="password" column="u_password"/>
+		<result property="salt" column="u_salt"/>
+		<result property="email" column="u_email"/>
+		<result property="status" column="u_status"/>
+		<result property="loginName" column="u_loginName"/>
+		<association property="team" javaType="Team" column="u_team_id">
+			<id property="id" column="t_id"/>
+			<result property="name" column="t_name"/>
+		</association>
+	</resultMap>
+	 -->
+	 <select id="get" parameterType="long" resultType="User">
+		select id, name,password,salt,email,status,
+			login_name as loginName,
+			team_id as "team.id"
+		from t_user
+		where id=#{id}
+	</select>
+
+	<select id="getList" parameterType="org.wind.sc.to.SearchPageCriteria" resultType="User">
+		select id, name,password,salt,email,status,
+			login_name as loginName,
+			team_id as "team.id"
+		from t_user
+		<where>
+			<if test="loginName != '' and email != ''">
+				login_name like concat('%','${loginName}','%') and email like concat('%','${email}','%')
+			</if>
+			<if test="loginName != '' and email == ''">
+				login_name like concat('%','${loginName}','%')
+			</if>
+			<if test="loginName == '' and email != ''">
+				email like concat('%','${email}','%')
+			</if>
+		</where>
+		limit #{pageSize}
+		offset #{offset}
+	</select>
+	<!-- fuzzy search ways: 1.like concat('%','${loginName}','%')   2. like '%'||#{loginName}||'%'(just for oracle) -->
+	<select id="getAmount" parameterType="org.wind.sc.to.SearchPageCriteria" resultType="int">
+		select  count(*)
+		from t_user
+		<where>
+			<if test="loginName != '' and email != ''">
+				login_name like concat('%','${loginName}','%') and email like concat('%','${email}','%')
+			</if>
+			<if test="loginName != '' and email == ''">
+				login_name like concat('%','${loginName}','%')
+			</if>
+			<if test="loginName == '' and email != ''">
+				email like concat('%','${email}','%')
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		insert t_user(
+			id, name,password,salt,email,status,login_name,team_id )
+		values(
+			#{id},#{name},#{password},#{salt},#{email},#{status},#{loginName},#{team.id})
+	</insert>
+	
+	<update id="update" parameterType="User">
+		update t_user
+			set name=#{name},password=#{password},salt=#{salt},email=#{email},status=#{status},login_name=#{loginName},team_id=#{team.id}
+		where id=#{id}	
+	</update>
+	
+	 
 </mapper>
